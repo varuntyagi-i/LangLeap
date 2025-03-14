@@ -6,26 +6,30 @@ import os
 # Load environment variables from .env file
 load_dotenv()
 
-# # Access the API key
-# api_key = os.getenv("AZURE_OPENAI_API_KEY")
-# api_version = os.getenv("API_VERSION")
-# api_endpoint = os.getenv("AZURE_BASE_URL")
-# model_name = "gpt-4o-mini"
+# Access the API key
+api_key = os.getenv("AZURE_OPENAI_API_KEY")
+api_version = os.getenv("API_VERSION")
+api_endpoint = os.getenv("AZURE_BASE_URL")
+together_api = os.getenv("TOGETHER_API_KEY")
 
-# client = AzureOpenAI(
-#     api_key=api_key,
-#     api_version=api_version,
-#     azure_endpoint=api_endpoint)
+## Azure OpenAI
+'''
+model_name = "gpt-4o-mini"
 
-import openai
+client = AzureOpenAI(
+    api_key=api_key,
+    api_version=api_version,
+    azure_endpoint=api_endpoint)
+'''
+## Together AI
 
-together_api_key = os.getenv("TOGETHER_API_KEY")
-model_name = "mistralai/mixtral"
+from together import Together
 
-client = openai.OpenAI(
-    api_key=together_api_key,  # Replace with your API key
-    base_url="https://api.together.xyz/v1"
+model_name = "deepseek-ai/DeepSeek-R1-Distill-Llama-70B-free"
+client = Together(
+    api_key=together_api
 )
+
 
 
 def generate_grammar_exercise():

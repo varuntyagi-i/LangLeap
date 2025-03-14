@@ -11,12 +11,25 @@ load_dotenv()
 api_key = os.getenv("AZURE_OPENAI_API_KEY")
 api_version = os.getenv("API_VERSION")
 api_endpoint = os.getenv("AZURE_BASE_URL")
+together_api = os.getenv("TOGETHER_API_KEY")
+
+## Azure OpenAI
+'''
 model_name = "gpt-4o-mini"
 
 client = AzureOpenAI(
     api_key=api_key,
     api_version=api_version,
     azure_endpoint=api_endpoint)
+'''
+## Together AI
+
+from together import Together
+
+model_name = "deepseek-ai/DeepSeek-R1-Distill-Llama-70B-free"
+client = Together(
+    api_key=together_api
+)
 
 
 def generate_random_sentence():
