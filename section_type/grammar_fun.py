@@ -41,8 +41,8 @@ def generate_grammar_exercise():
       {"role": "user", "content": "Create a fun grammar exercise (fill in the blanks or multiple choice) based on English language. Please give one question only"}
       ]
     )
-    print(completion.choices[0].message.content)
-    return completion.choices[0].message.content.strip()
+    print(completion.choices[0].message.content.split("</think>")[-1].strip())
+    return completion.choices[0].message.content.split("</think>")[-1].strip().strip()
 
 def check_answer(question, user_answer):
     # Using OpenAI to check the user's answer and provide feedback
@@ -53,8 +53,8 @@ def check_answer(question, user_answer):
       {"role": "user", "content": f"Question: {question}\nAnswer: {user_answer}\nEvaluate the correctness of the answer and provide feedback: Keep it consize and 2-3 liner"}
       ]
     )
-    print(completion.choices[0].message.content)
-    return completion.choices[0].message.content.strip()
+    print(completion.choices[0].message.content.split("</think>")[-1].strip())
+    return completion.choices[0].message.content.split("</think>")[-1].strip().strip()
 
 
 

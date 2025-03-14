@@ -41,8 +41,8 @@ def generate_random_sentence():
       {"role": "user", "content": " Please generate a long sentence in hindi, keep it 3-4 liner at max"}
       ]
     )
-    print(completion.choices[0].message.content)
-    return completion.choices[0].message.content.strip()
+    print(completion.choices[0].message.content.split("</think>")[-1].strip())
+    return completion.choices[0].message.content.split("</think>")[-1].strip().strip()
 
 def verify_translation(original, translation):
     # Using OpenAI to verify the translation and provide feedback
@@ -53,8 +53,8 @@ def verify_translation(original, translation):
       {"role": "user", "content": f"Original sentence in hindi: {original},user translation: {translation}. based on the original sentance and the user generated translation guide, tell what is wrong and right in 2-3 liner reponse."}
       ]
     )
-    print(completion.choices[0].message.content)
-    return completion.choices[0].message.content.strip()
+    print(completion.choices[0].message.content.split("</think>")[-1].strip())
+    return completion.choices[0].message.content.split("</think>")[-1].strip().strip()
 
 
 

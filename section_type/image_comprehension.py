@@ -67,9 +67,8 @@ def describe_image(image_url):
       max_tokens=300,
     )
     print("Chat GPT:")
-    print(response.choices[0].message.content)
-    return response.choices[0].message.content
-
+    print(response.choices[0].message.content.split("</think>")[-1].strip())
+    return response.choices[0].message.content.split("</think>")[-1].strip()
 
 
 def compare_descriptions(model_desc, user_desc):
@@ -87,7 +86,7 @@ def compare_descriptions(model_desc, user_desc):
       ]
     )
 
-    print(completion.choices[0].message.content)
+    print(completion.choices[0].message.content.split("</think>")[-1].strip())
     st.markdown("### 📝 Feedback & Analysis")
     st.markdown(
         f"""
@@ -100,7 +99,7 @@ def compare_descriptions(model_desc, user_desc):
             font-weight: 500;
             box-shadow: 1px 1px 8px rgba(0,0,0,0.1);
         ">
-            <b>🔍 Analysis:</b> {completion.choices[0].message.content.strip()}
+            <b>🔍 Analysis:</b> {completion.choices[0].message.content.split("</think>")[-1].strip().strip()}
         </div>
         """,
         unsafe_allow_html=True
