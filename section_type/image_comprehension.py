@@ -18,22 +18,27 @@ api_endpoint = os.getenv("AZURE_BASE_URL")
 together_api = os.getenv("TOGETHER_API_KEY")
 
 ## Azure OpenAI
-'''
+
 model_name = "gpt-4o-mini"
 
 client = AzureOpenAI(
     api_key=api_key,
     api_version=api_version,
     azure_endpoint=api_endpoint)
-'''
-## Together AI
 
+## Together AI
+'''
 from together import Together
 
-model_name = "deepseek-ai/DeepSeek-R1-Distill-Llama-70B-free"
+deepseek-ai/DeepSeek-R1-Distill-Llama-70B-free
+meta-llama/Llama-3.2-3B-Instruct-Turbo
+
+model_name = "meta-llama/Llama-3.3-70B-Instruct-Turbo-Free"
 client = Together(
     api_key=together_api
 )
+
+'''
 
 
 def speech_to_text(file_path):
@@ -54,7 +59,7 @@ def describe_image(image_url):
         {
           "role": "user",
           "content": [
-            {"type": "text", "text": "describe this image like in an IELTS exam. Keep it consize and within 50 words"},
+            {"type": "text", "text": "describe this image like in an IELTS exam. Keep it consize and within 200 words"},
             {
               "type": "image_url",
               "image_url": {
@@ -67,8 +72,8 @@ def describe_image(image_url):
       max_tokens=300,
     )
     print("Chat GPT:")
-    print(response.choices[0].message.content.split("</think>")[-1].strip())
-    return response.choices[0].message.content.split("</think>")[-1].strip()
+    print(response.choices[0].message.content)
+    return response.choices[0].message.content
 
 
 def compare_descriptions(model_desc, user_desc):
@@ -86,7 +91,7 @@ def compare_descriptions(model_desc, user_desc):
       ]
     )
 
-    print(completion.choices[0].message.content.split("</think>")[-1].strip())
+    print(completion.choices[0].message.content)
     st.markdown("### 📝 Feedback & Analysis")
     st.markdown(
         f"""
@@ -99,7 +104,7 @@ def compare_descriptions(model_desc, user_desc):
             font-weight: 500;
             box-shadow: 1px 1px 8px rgba(0,0,0,0.1);
         ">
-            <b>🔍 Analysis:</b> {completion.choices[0].message.content.split("</think>")[-1].strip().strip()}
+            <b>🔍 Analysis:</b> {completion.choices[0].message.content.strip()}
         </div>
         """,
         unsafe_allow_html=True
@@ -206,5 +211,7 @@ def app():
 
                 # Process speech
                 user_description = "This picture shows a sunset. The sun is bright and orange. There is a fence in front. Below the fence, there is a road. Cars are driving on the road. Trees are seen on the side. The sky has colors like blue"
-                model_description = describe_image(st.session_state.image_url)
-                compare_descriptions(model_description, user_description)
+                with st.spinner("⏳ Analyzing image and comparing descriptions..."):
+                    model_description = describe_image(st.session_state.image_url)
+                    compare_descriptions(model_description, user_description)
+                st.success("✅ Analysis complete!")

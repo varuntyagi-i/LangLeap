@@ -54,17 +54,17 @@ def app():
 
     with col1:
         if st.button("📷 Image Comprehension", use_container_width=True):
-            st.session_state["selected_page"] = "Image Comprehension"
+            st.session_state["selected_page"] = "📷 Image Comprehension"
             st.rerun()
 
     with col2:
         if st.button("📝 Grammar & Fun", use_container_width=True):
-            st.session_state["selected_page"] = "Grammar and Fun"
+            st.session_state["selected_page"] = "📝 Grammar & Fun"
             st.rerun()
 
     with col3:
         if st.button("📖 Reading & Translation", use_container_width=True):
-            st.session_state["selected_page"] = "Reading and Translation"
+            st.session_state["selected_page"] = "📖 Reading & Translation"
             st.rerun()
 
  

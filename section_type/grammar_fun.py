@@ -13,22 +13,24 @@ api_endpoint = os.getenv("AZURE_BASE_URL")
 together_api = os.getenv("TOGETHER_API_KEY")
 
 ## Azure OpenAI
-'''
+
 model_name = "gpt-4o-mini"
 
 client = AzureOpenAI(
     api_key=api_key,
     api_version=api_version,
     azure_endpoint=api_endpoint)
-'''
-## Together AI
 
+
+## Together AI
+'''
 from together import Together
 
 model_name = "deepseek-ai/DeepSeek-R1-Distill-Llama-70B-free"
 client = Together(
     api_key=together_api
 )
+'''
 
 
 
@@ -41,8 +43,8 @@ def generate_grammar_exercise():
       {"role": "user", "content": "Create a fun grammar exercise (fill in the blanks or multiple choice) based on English language. Please give one question only"}
       ]
     )
-    print(completion.choices[0].message.content.split("</think>")[-1].strip())
-    return completion.choices[0].message.content.split("</think>")[-1].strip().strip()
+    print(completion.choices[0].message.content)
+    return completion.choices[0].message.content.strip()
 
 def check_answer(question, user_answer):
     # Using OpenAI to check the user's answer and provide feedback
@@ -53,8 +55,8 @@ def check_answer(question, user_answer):
       {"role": "user", "content": f"Question: {question}\nAnswer: {user_answer}\nEvaluate the correctness of the answer and provide feedback: Keep it consize and 2-3 liner"}
       ]
     )
-    print(completion.choices[0].message.content.split("</think>")[-1].strip())
-    return completion.choices[0].message.content.split("</think>")[-1].strip().strip()
+    print(completion.choices[0].message.content)
+    return completion.choices[0].message.content.strip()
 
 
 

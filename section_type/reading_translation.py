@@ -14,22 +14,23 @@ api_endpoint = os.getenv("AZURE_BASE_URL")
 together_api = os.getenv("TOGETHER_API_KEY")
 
 ## Azure OpenAI
-'''
+
 model_name = "gpt-4o-mini"
 
 client = AzureOpenAI(
     api_key=api_key,
     api_version=api_version,
     azure_endpoint=api_endpoint)
-'''
-## Together AI
 
+## Together AI
+'''
 from together import Together
 
 model_name = "deepseek-ai/DeepSeek-R1-Distill-Llama-70B-free"
 client = Together(
     api_key=together_api
 )
+'''
 
 
 def generate_random_sentence():
@@ -41,8 +42,8 @@ def generate_random_sentence():
       {"role": "user", "content": " Please generate a long sentence in hindi, keep it 3-4 liner at max"}
       ]
     )
-    print(completion.choices[0].message.content.split("</think>")[-1].strip())
-    return completion.choices[0].message.content.split("</think>")[-1].strip().strip()
+    print(completion.choices[0].message.content)
+    return completion.choices[0].message.content.strip()
 
 def verify_translation(original, translation):
     # Using OpenAI to verify the translation and provide feedback
@@ -53,8 +54,8 @@ def verify_translation(original, translation):
       {"role": "user", "content": f"Original sentence in hindi: {original},user translation: {translation}. based on the original sentance and the user generated translation guide, tell what is wrong and right in 2-3 liner reponse."}
       ]
     )
-    print(completion.choices[0].message.content.split("</think>")[-1].strip())
-    return completion.choices[0].message.content.split("</think>")[-1].strip().strip()
+    print(completion.choices[0].message.content)
+    return completion.choices[0].message.content.strip()
 
 
 
